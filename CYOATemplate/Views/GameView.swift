@@ -15,24 +15,30 @@ struct GameView: View {
     
     // MARK: Computed properties
     var body: some View {
-        VStack(spacing: 10) {
+        
+        ZStack {
+            Color(.green)
+                .ignoresSafeArea()
             
-            HStack {
-                Text("\(currentNodeId)")
-                    .font(.largeTitle)
+            VStack(spacing: 10) {
+                
+                HStack {
+                    Text("\(currentNodeId)")
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                
+                NodeView(currentNodeId: currentNodeId)
+                
+                Divider()
+                
+                EdgesView(currentNodeId: $currentNodeId)
+                
                 Spacer()
+                
             }
-            
-            NodeView(currentNodeId: currentNodeId)
-            
-            Divider()
-            
-            EdgesView(currentNodeId: $currentNodeId)
-            
-            Spacer()
-            
+            .padding()
         }
-        .padding()
     }
 }
 
