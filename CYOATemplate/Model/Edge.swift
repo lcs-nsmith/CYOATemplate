@@ -14,5 +14,5 @@ struct Edge: BlackbirdModel {
     @BlackbirdColumn var from_node_id: Int
     @BlackbirdColumn var to_node_id: Int
     @BlackbirdColumn var prompt: String
-
+    
 }
