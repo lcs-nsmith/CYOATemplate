@@ -11,6 +11,10 @@ struct SpinnerView: View {
     var size: Double
     var percentage1: Double
     var percentage2: Double
+    var totalRotation: Double {
+        return Double(Int.random(in: 3...5)) + Double(Int.random(in: 0...99)) / 100 + 0.005
+    }
+    @State var currentRotation = 0.0
     var body: some View {
         ZStack {
             Circle()
@@ -37,6 +41,12 @@ struct SpinnerView: View {
                 .frame(width: size, height: size)
             ArrowView(size: size * 0.75, width: 5)
                 .offset(x: 0, y: -size * 0.375)
+                .rotationEffect(Angle(degrees: 360 * currentRotation))
+        }
+        .task {
+            withAnimation(.linear(duration: totalRotation * 0.85)) {
+                currentRotation = totalRotation
+            }
         }
     }
 }
