@@ -8,37 +8,41 @@
 import SwiftUI
 
 struct SpinnerView: View {
+    var size: Double
+    var percentage1: Double
+    var percentage2: Double
     var body: some View {
         ZStack {
             Circle()
-                .trim(from: 0, to: 30/100)
+                .trim(from: 0, to: percentage1 / 100)
                 .stroke(Color(hue: 0,
                               saturation: 1.0,
                               brightness: 1.0),
-                        lineWidth: 200)
-                .frame(width: 200, height: 200)
+                        lineWidth: size)
+                .frame(width: size, height: size)
                 
             Circle()
-                .trim(from: 30/100, to: 60/100)
+                .trim(from: percentage1 / 100, to: (percentage1 + percentage2) / 100)
                 .stroke(Color(hue: 1/6,
                             saturation: 1.0,
                             brightness: 1.0),
-                        lineWidth: 200)
-                .frame(width: 200, height: 200)
+                        lineWidth: size)
+                .frame(width: size, height: size)
             Circle()
-                .trim(from: 60/100, to: 100/100)
+                .trim(from: (percentage1 + percentage2) / 100, to: 1)
                 .stroke(Color(hue: 1/3,
                             saturation: 1.0,
                             brightness: 1.0),
-                      lineWidth: 200)
-                .frame(width: 200, height: 200)
-                
+                      lineWidth: size)
+                .frame(width: size, height: size)
         }
     }
 }
 
 struct SpinnerView_Previews: PreviewProvider {
     static var previews: some View {
-        SpinnerView()
+        SpinnerView(size: 100,
+                    percentage1: 55,
+                    percentage2: 25)
     }
 }
