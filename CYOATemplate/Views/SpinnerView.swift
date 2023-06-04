@@ -13,8 +13,9 @@ struct SpinnerView: View {
     var visualPercentage2: Int
     var actualPercentage1: Int
     var actualPercentage2: Int
+    @State var opacity = 0.0
     @Binding var outcome: Int
-    var totalRotation: Double {
+    var totalRotationComputed: Double {
         let result = Int.random(in: 0...99)
         if result < actualPercentage1 {
             outcome = 1
@@ -27,38 +28,49 @@ struct SpinnerView: View {
         outcome = 3
         return Double(Int.random(in: 3...5)) + Double(Int.random(in: visualPercentage1 + visualPercentage2...99)) / 100 + 0.005
     }
+    @State var totalRotation = 0.0
     @State var currentRotation = 0.0
     var body: some View {
-        ZStack {
-            Circle()
-                .trim(from: 0, to: Double(visualPercentage1) / 100)
-                .stroke(Color(hue: 0,
-                              saturation: 1.0,
-                              brightness: 1.0),
-                        lineWidth: size)
-                .frame(width: size, height: size)
+        VStack(spacing: size) {
+            ZStack {
+                Circle()
+                    .trim(from: 0, to: Double(visualPercentage1) / 100)
+                    .stroke(Color(hue: 0,
+                                  saturation: 1.0,
+                                  brightness: 1.0),
+                            lineWidth: size)
+                    .frame(width: size, height: size)
                 
-            Circle()
-                .trim(from: Double(visualPercentage1) / 100, to: Double(visualPercentage1 + visualPercentage2) / 100)
-                .stroke(Color(hue: 1/6,
-                            saturation: 1.0,
-                            brightness: 1.0),
-                        lineWidth: size)
-                .frame(width: size, height: size)
-            Circle()
-                .trim(from: Double(visualPercentage1 + visualPercentage2) / 100, to: 1)
-                .stroke(Color(hue: 1/3,
-                            saturation: 1.0,
-                            brightness: 1.0),
-                      lineWidth: size)
-                .frame(width: size, height: size)
-            ArrowView(size: size * 0.75, width: 5)
-                .offset(x: 0, y: -size * 0.375)
-                .rotationEffect(Angle(degrees: 360 * currentRotation))
+                Circle()
+                    .trim(from: Double(visualPercentage1) / 100, to: Double(visualPercentage1 + visualPercentage2) / 100)
+                    .stroke(Color(hue: 1/6,
+                                  saturation: 1.0,
+                                  brightness: 1.0),
+                            lineWidth: size)
+                    .frame(width: size, height: size)
+                Circle()
+                    .trim(from: Double(visualPercentage1 + visualPercentage2) / 100, to: 1)
+                    .stroke(Color(hue: 1/3,
+                                  saturation: 1.0,
+                                  brightness: 1.0),
+                            lineWidth: size)
+                    .frame(width: size, height: size)
+                ArrowView(size: size * 0.75, width: 5)
+                    .offset(x: 0, y: -size * 0.375)
+                    .rotationEffect(Angle(degrees: 360 * currentRotation))
+            }
+            Button("Continue", action: {
+                
+            })
+            .opacity(opacity)
         }
         .task {
+            totalRotation = totalRotationComputed
             withAnimation(.linear(duration: totalRotation * 0.85)) {
                 currentRotation = totalRotation
+            }
+            withAnimation(.linear(duration: 0.1).delay(totalRotation * 0.85)) {
+                opacity = 1.0
             }
         }
     }
