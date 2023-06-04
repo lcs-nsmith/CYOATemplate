@@ -35,6 +35,8 @@ struct SpinnerView: View {
                             brightness: 1.0),
                       lineWidth: size)
                 .frame(width: size, height: size)
+            ArrowView(size: size * 0.75, width: 5)
+                .offset(x: 0, y: -size * 0.375)
         }
     }
 }
