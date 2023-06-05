@@ -13,6 +13,9 @@ struct SpinnerView: View {
     var visualPercentage2: Int
     var actualPercentage1: Int
     var actualPercentage2: Int
+    var color1: Color
+    var color2: Color
+    var color3: Color
     @State var opacity = 0.0
     @Binding var outcome: Int
     @State var totalRotation = 0.0
@@ -22,24 +25,18 @@ struct SpinnerView: View {
             ZStack {
                 Circle()
                     .trim(from: 0, to: Double(visualPercentage1) / 100)
-                    .stroke(Color(hue: 0,
-                                  saturation: 1.0,
-                                  brightness: 1.0),
+                    .stroke(color1,
                             lineWidth: size)
                     .frame(width: size, height: size)
                 
                 Circle()
                     .trim(from: Double(visualPercentage1) / 100, to: Double(visualPercentage1 + visualPercentage2) / 100)
-                    .stroke(Color(hue: 1/6,
-                                  saturation: 1.0,
-                                  brightness: 1.0),
+                    .stroke(color2,
                             lineWidth: size)
                     .frame(width: size, height: size)
                 Circle()
                     .trim(from: Double(visualPercentage1 + visualPercentage2) / 100, to: 1)
-                    .stroke(Color(hue: 1/3,
-                                  saturation: 1.0,
-                                  brightness: 1.0),
+                    .stroke(color3,
                             lineWidth: size)
                     .frame(width: size, height: size)
                 ArrowView(size: size * 0.75, width: 5)
@@ -85,6 +82,9 @@ struct SpinnerView_Previews: PreviewProvider {
                     visualPercentage2: 25,
                     actualPercentage1: 90,
                     actualPercentage2: 5,
+                    color1: Color(.red),
+                    color2: Color(.yellow),
+                    color3: Color(.green),
                     outcome: .constant(1))
     }
 }
