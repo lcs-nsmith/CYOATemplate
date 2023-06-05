@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D3577382A2D1635002E49D9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577372A2D1635002E49D9 /* SpinnerView.swift */; };
+		0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577392A2D1D4F002E49D9 /* ArrowView.swift */; };
 		81C198A92A251ABB0047A4B3 /* CYOATemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */; };
 		81C198AD2A251ABC0047A4B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AC2A251ABC0047A4B3 /* Assets.xcassets */; };
 		81C198B02A251ABC0047A4B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AF2A251ABC0047A4B3 /* Preview Assets.xcassets */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D3577372A2D1635002E49D9 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
+		0D3577392A2D1D4F002E49D9 /* ArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
 		81C198A52A251ABB0047A4B3 /* CYOATemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYOATemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOATemplateApp.swift; sourceTree = "<group>"; };
 		81C198AC2A251ABC0047A4B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 				81C198B82A251AE00047A4B3 /* GameView.swift */,
 				81C784AA2A28AD0B001BC867 /* NodeView.swift */,
 				81C784AE2A28B4E7001BC867 /* EdgesView.swift */,
+				0D3577372A2D1635002E49D9 /* SpinnerView.swift */,
+				0D3577392A2D1D4F002E49D9 /* ArrowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,6 +198,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81C198BB2A251B1B0047A4B3 /* Node.swift in Sources */,
+				0D3577382A2D1635002E49D9 /* SpinnerView.swift in Sources */,
+				0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */,
 				81C198B92A251AE00047A4B3 /* GameView.swift in Sources */,
 				81C784A92A28AB38001BC867 /* AppDatabase.swift in Sources */,
 				81C198BD2A251B2B0047A4B3 /* Edge.swift in Sources */,
