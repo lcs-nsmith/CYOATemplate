@@ -28,9 +28,9 @@ struct NodeView: View {
         if let node = nodes.results.first {
             
             // Show a Text view, but render Markdown syntax, preserving newline characters
-            Text(try! AttributedString(markdown: node.narrative,
-                                       options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
-                                            .inlineOnlyPreservingWhitespace)))
+            Text(nodeText(for: node))
+                .foregroundColor(Color(.systemPurple))
+            
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
@@ -53,7 +53,13 @@ struct NodeView: View {
         
     }
     
-    
+    // MARK: Function
+    func nodeText(for node: Node) -> AttributedString {
+        return try! AttributedString(markdown: node.narrative,
+                                   options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
+                                        .inlineOnlyPreservingWhitespace))
+
+    }
 }
 
 struct NodeView_Previews: PreviewProvider {

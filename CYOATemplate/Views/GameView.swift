@@ -17,14 +17,15 @@ struct GameView: View {
     var body: some View {
         
         ZStack {
-            Color(.green)
+            Color(.systemGreen)
                 .ignoresSafeArea()
             
             VStack(spacing: 10) {
                 
                 HStack {
                     Text("\(currentNodeId)")
-                        .font(.largeTitle)
+                        .font(.system(size: 35, weight: .medium, design: .monospaced))
+                    
                     Spacer()
                 }
                 
