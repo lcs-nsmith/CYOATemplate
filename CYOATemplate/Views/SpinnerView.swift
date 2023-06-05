@@ -15,19 +15,6 @@ struct SpinnerView: View {
     var actualPercentage2: Int
     @State var opacity = 0.0
     @Binding var outcome: Int
-    var totalRotationComputed: Double {
-        let result = Int.random(in: 0...99)
-        if result < actualPercentage1 {
-            outcome = 1
-            return Double(Int.random(in: 3...5)) + Double(Int.random(in: 0..<visualPercentage1)) / 100 + 0.255
-        }
-        if result < actualPercentage1 + actualPercentage2 {
-            outcome = 2
-            return Double(Int.random(in: 3...5)) + Double(Int.random(in: visualPercentage1..<visualPercentage1 + visualPercentage2)) / 100 + 0.255
-        }
-        outcome = 3
-        return Double(Int.random(in: 3...5)) + Double(Int.random(in: visualPercentage1 + visualPercentage2...99)) / 100 + 0.255
-    }
     @State var totalRotation = 0.0
     @State var currentRotation = 0.0
     var body: some View {
@@ -65,13 +52,28 @@ struct SpinnerView: View {
             .opacity(opacity)
         }
         .task {
-            totalRotation = totalRotationComputed
             withAnimation(.linear(duration: totalRotation * 0.85)) {
                 currentRotation = totalRotation
             }
             withAnimation(.linear(duration: 0.1).delay(totalRotation * 0.85)) {
                 opacity = 1.0
             }
+        }
+        .onAppear {
+            let result = Int.random(in: 0...99)
+            if result < actualPercentage1 {
+                outcome = 1
+                totalRotation = Double(Int.random(in: 3...5)) + Double(Int.random(in: 0..<visualPercentage1)) / 100 + 0.255
+            }
+            else if result < actualPercentage1 + actualPercentage2 {
+                outcome = 2
+                totalRotation = Double(Int.random(in: 3...5)) + Double(Int.random(in: visualPercentage1..<visualPercentage1 + visualPercentage2)) / 100 + 0.255
+            }
+            else {
+                outcome = 3
+                totalRotation = Double(Int.random(in: 3...5)) + Double(Int.random(in: visualPercentage1 + visualPercentage2...99)) / 100 + 0.255
+            }
+            
         }
     }
 }
