@@ -13,9 +13,9 @@ struct SpinnerView: View {
     var visualPercentage2: Int
     var actualPercentage1: Int
     var actualPercentage2: Int
-    var color1: Color
-    var color2: Color
-    var color3: Color
+    var color1: Int
+    var color2: Int
+    var color3: Int
     @State var opacity = 0.0
     @Binding var outcome: Int
     @State var totalRotation = 0.0
@@ -24,22 +24,35 @@ struct SpinnerView: View {
         VStack(spacing: size) {
             ZStack {
                 Circle()
+                    .stroke(lineWidth: size)
+                    .frame(width: size*1.05, height: size*1.05)
+                Circle()
                     .trim(from: 0, to: Double(visualPercentage1) / 100)
-                    .stroke(color1,
+                    .stroke(Color(color[color1]),
                             lineWidth: size)
                     .frame(width: size, height: size)
-                
                 Circle()
                     .trim(from: Double(visualPercentage1) / 100, to: Double(visualPercentage1 + visualPercentage2) / 100)
-                    .stroke(color2,
+                    .stroke(Color(color[color2]),
                             lineWidth: size)
                     .frame(width: size, height: size)
                 Circle()
                     .trim(from: Double(visualPercentage1 + visualPercentage2) / 100, to: 1)
-                    .stroke(color3,
+                    .stroke(Color(color[color3]),
                             lineWidth: size)
                     .frame(width: size, height: size)
-                ArrowView(size: size * 0.75, width: 5)
+                Rectangle()
+                    .frame(width: size, height: size/40)
+                    .offset(x: size/2, y: 0)
+                Rectangle()
+                    .frame(width: size, height: size/40)
+                    .offset(x: size/2, y: 0)
+                    .rotationEffect(Angle(degrees: 3.6 * Double(visualPercentage1)), anchor: .center)
+                Rectangle()
+                    .frame(width: size, height: size/40)
+                    .offset(x: size/2, y: 0)
+                    .rotationEffect(Angle(degrees: 3.6 * Double(visualPercentage1 + visualPercentage2)), anchor: .center)
+                ArrowView(size: size * 0.75, width: size/20)
                     .offset(x: 0, y: -size * 0.375)
                     .rotationEffect(Angle(degrees: 360 * currentRotation))
             }
@@ -82,9 +95,9 @@ struct SpinnerView_Previews: PreviewProvider {
                     visualPercentage2: 25,
                     actualPercentage1: 90,
                     actualPercentage2: 5,
-                    color1: Color(.red),
-                    color2: Color(.yellow),
-                    color3: Color(.green),
+                    color1: 0,
+                    color2: 1,
+                    color3: 2,
                     outcome: .constant(1))
     }
 }
