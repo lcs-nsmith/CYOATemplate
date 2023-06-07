@@ -28,7 +28,7 @@ struct GameView: View {
             Divider()
             
             EdgesView(currentNodeId: $currentNodeId)
-                        
+            
             Spacer()
             
         }
@@ -40,6 +40,6 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
         // Make the database available to all other view through the environment
-        .environment(\.blackbirdDatabase, AppDatabase.instance)
+            .environment(\.blackbirdDatabase, AppDatabase.instance)
     }
 }

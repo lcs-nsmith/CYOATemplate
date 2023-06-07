@@ -31,11 +31,11 @@ struct EdgesView: View {
     var body: some View {
         
         VStack(spacing: 20) {
-
+            
             if edges.results.count > 0 {
-
+                
                 ForEach(edges.results) { currentEdge in
-
+                    
                     HStack {
                         
                         Spacer()
@@ -46,22 +46,22 @@ struct EdgesView: View {
                             .onTapGesture {
                                 currentNodeId = currentEdge.to_node_id
                             }
-
+                        
                     }
-
+                    
                 }
-
+                
             } else {
                 HStack {
                     Spacer()
-
+                    
                     Text("No edges found for node with \(currentNodeId).")
                         .onTapGesture {
                             currentNodeId = 1
                         }
                 }
             }
-
+            
         }
         
     }
@@ -83,10 +83,10 @@ struct EdgesView: View {
 
 struct EdgesView_Previews: PreviewProvider {
     static var previews: some View {
-
+        
         EdgesView(currentNodeId: .constant(3))
         // Make the database available to all other view through the environment
-        .environment(\.blackbirdDatabase, AppDatabase.instance)
+            .environment(\.blackbirdDatabase, AppDatabase.instance)
         
     }
 }

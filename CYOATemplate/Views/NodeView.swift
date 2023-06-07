@@ -15,6 +15,7 @@ struct NodeView: View {
     // The id of the node we are trying to view
     let currentNodeId: Int
     
+
     // How many nodes have been visited?
     @BlackbirdLiveQuery(tableName: "Node", { db in
         try await db.query("SELECT COUNT(*) AS VistedNodeCount FROM Node WHERE Node.visits > 0")
@@ -66,6 +67,12 @@ struct NodeView: View {
                     updateVisitCount(forNodeWithId: newNodeId)
                 }
             }
+
+            // Show a Text view, but render Markdown syntax, preserving newline characters
+            Text(try! AttributedString(markdown: node.narrative,
+                                       options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
+                                            .inlineOnlyPreservingWhitespace)))
+
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
@@ -82,13 +89,14 @@ struct NodeView: View {
         //       in the Node table
         _nodes = BlackbirdLiveModels({ db in
             try await Node.read(from: db,
-                                    sqlWhere: "node_id = ?", "\(currentNodeId)")
+                                sqlWhere: "node_id = ?", "\(currentNodeId)")
         })
         
         // Set the node we are trying to view
         self.currentNodeId = currentNodeId
         
     }
+
 
     // MARK: Function(s)
     func updateVisitCount(forNodeWithId id: Int) {
@@ -105,10 +113,10 @@ struct NodeView: View {
 struct NodeView_Previews: PreviewProvider {
     
     static var previews: some View {
-
+        
         NodeView(currentNodeId: 1)
         // Make the database available to all other view through the environment
-        .environment(\.blackbirdDatabase, AppDatabase.instance)
-
+            .environment(\.blackbirdDatabase, AppDatabase.instance)
+        
     }
 }
