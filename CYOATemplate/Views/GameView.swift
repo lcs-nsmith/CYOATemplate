@@ -6,12 +6,15 @@
 //
 
 import Blackbird
+import RetroText
 import SwiftUI
 
 struct GameView: View {
     
     // MARK: Stored properties
     @State var currentNodeId: Int = 1
+    
+    @Binding var retroGameFontGameView: Bool
     
     // MARK: Computed properties
     var body: some View {
@@ -23,8 +26,14 @@ struct GameView: View {
             VStack(spacing: 10) {
                 
                 HStack {
-                    Text("\(currentNodeId)")
-                        .font(.system(size: 35, weight: .medium, design: .monospaced))
+                    
+                    if retroGameFontGameView == true {
+                        Text("\(currentNodeId)")
+                            .retroFont(.pixelEmulator)
+                    } else {
+                        Text("\(currentNodeId)")
+                            .font(.system(size: 35, weight: .medium, design: .monospaced))
+                    }
                     
                     Spacer()
                 }
@@ -45,7 +54,7 @@ struct GameView: View {
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(retroGameFontGameView: .constant(false))
         // Make the database available to all other view through the environment
             .environment(\.blackbirdDatabase, AppDatabase.instance)
     }
