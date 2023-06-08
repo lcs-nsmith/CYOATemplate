@@ -15,6 +15,8 @@ struct NodeView: View {
     // The id of the node we are trying to view
     let currentNodeId: Int
     
+    let retroGameFontActive: Bool
+    
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
@@ -28,8 +30,13 @@ struct NodeView: View {
         if let node = nodes.results.first {
             
             // Show a Text view, but render Markdown syntax, preserving newline characters
-            Text(nodeText(for: node))
-                .foregroundColor(Color(.systemPurple))
+            if retroGameFontActive == true {
+                Text(nodeText(for: node))
+                    .foregroundColor(Color(.systemBrown))
+            } else {
+                Text(nodeText(for: node))
+                    .foregroundColor(Color(.systemRed))
+            }
             
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
@@ -37,7 +44,7 @@ struct NodeView: View {
     }
     
     // MARK: Initializer
-    init(currentNodeId: Int) {
+    init(currentNodeId: Int, retroGameFontActive: Bool) {
         
         // Retrieve rows that describe nodes in the directed graph
         // NOTE: There should only be one row for a given node_id
@@ -51,6 +58,7 @@ struct NodeView: View {
         // Set the node we are trying to view
         self.currentNodeId = currentNodeId
         
+        self.retroGameFontActive = retroGameFontActive
     }
     
     // MARK: Function
@@ -66,7 +74,7 @@ struct NodeView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        NodeView(currentNodeId: 1)
+        NodeView(currentNodeId: 1, retroGameFontActive: false)
         // Make the database available to all other view through the environment
             .environment(\.blackbirdDatabase, AppDatabase.instance)
         
