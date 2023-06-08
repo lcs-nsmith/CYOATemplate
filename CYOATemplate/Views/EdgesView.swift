@@ -7,6 +7,8 @@
 
 import Blackbird
 import SwiftUI
+import RetroText
+import UIKit
 
 struct EdgesView: View {
     
@@ -14,6 +16,8 @@ struct EdgesView: View {
     
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
+    
+    let retroGameFontActive: Bool
     
     // The list of edges retrieved
     @BlackbirdLiveModels var edges: Blackbird.LiveResults<Edge>
@@ -41,11 +45,22 @@ struct EdgesView: View {
                         Spacer()
                         
                         // Show a Text view, but render Markdown syntax, ignoring newlines
-                        Text(try! AttributedString(markdown: currentEdge.prompt))
-                            .multilineTextAlignment(.trailing)
-                            .onTapGesture {
-                                currentNodeId = currentEdge.to_node_id
-                            }
+                        if retroGameFontActive == true {
+                            Text(try! AttributedString(markdown: currentEdge.prompt))
+                                .multilineTextAlignment(.trailing)
+                                .onTapGesture {
+                                    currentNodeId = currentEdge.to_node_id
+                                }
+                                .retroFont(.pixelEmulator, size: 20)
+                                .foregroundColor(.white)
+                        } else {
+                            Text(try! AttributedString(markdown: currentEdge.prompt))
+                                .multilineTextAlignment(.trailing)
+                                .onTapGesture {
+                                    currentNodeId = currentEdge.to_node_id
+                                }
+                        }
+                        
                         
                     }
                     
@@ -67,7 +82,7 @@ struct EdgesView: View {
     }
     
     // MARK: Initializer
-    init(currentNodeId: Binding<Int>) {
+    init(currentNodeId: Binding<Int>, retroGameFontActive: Bool) {
         
         // Retrieve edges for the current node in the graph
         _edges = BlackbirdLiveModels({ db in
@@ -78,13 +93,13 @@ struct EdgesView: View {
         // Set the current node
         _currentNodeId = currentNodeId
         
+        self.retroGameFontActive = retroGameFontActive
     }
 }
-
 struct EdgesView_Previews: PreviewProvider {
     static var previews: some View {
         
-        EdgesView(currentNodeId: .constant(3))
+        EdgesView(currentNodeId: .constant(3), retroGameFontActive: false)
         // Make the database available to all other view through the environment
             .environment(\.blackbirdDatabase, AppDatabase.instance)
         

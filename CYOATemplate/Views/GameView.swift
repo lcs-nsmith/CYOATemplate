@@ -93,8 +93,10 @@ struct GameView: View {
                 }
                 
                 if retroGameFontActive == true {
-                    NodeView(currentNodeId: currentNodeId, retroGameFontActive: retroGameFontActive)
-                        .retroFont(.kongText)
+                    VStack {
+                        NodeView(currentNodeId: currentNodeId, retroGameFontActive: retroGameFontActive)
+                            .retroFont(.pixelEmulator, size: 16)
+                    }
                 } else {
                     NodeView(currentNodeId: currentNodeId, retroGameFontActive: retroGameFontActive)
                 }
@@ -102,7 +104,7 @@ struct GameView: View {
                 
                 Divider()
                 
-                EdgesView(currentNodeId: $currentNodeId)
+                EdgesView(currentNodeId: $currentNodeId, retroGameFontActive: retroGameFontActive)
                 
                 Spacer()
                 

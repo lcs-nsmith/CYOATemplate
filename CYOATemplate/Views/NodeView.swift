@@ -7,6 +7,7 @@
 
 import Blackbird
 import SwiftUI
+import RetroText
 
 struct NodeView: View {
     
@@ -31,10 +32,11 @@ struct NodeView: View {
             
             // Show a Text view, but render Markdown syntax, preserving newline characters
             if retroGameFontActive == true {
-                Text(nodeText(for: node))
+                TypedText("\(nodeText(for: node))", speed: .reallyFast)
                     .foregroundColor(Color(.systemBrown))
             } else {
                 Text(nodeText(for: node))
+                    .font(.system(size: 16, weight: .medium, design: .monospaced))
                     .foregroundColor(Color(.systemRed))
             }
             
