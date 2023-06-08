@@ -25,6 +25,9 @@ struct SpinnerView: View {
             VStack(spacing: size) {
                 ZStack {
                     Circle()
+                        .stroke(lineWidth: size)
+                        .frame(width: size*1.05, height: size*1.05)
+                    Circle()
                         .trim(from: 0, to: Double(spinner.visualPercentage1) / 100)
                         .stroke(Color(color[spinner.color1]),
                                 lineWidth: size)
@@ -40,6 +43,17 @@ struct SpinnerView: View {
                         .stroke(Color(color[spinner.color3]),
                                 lineWidth: size)
                         .frame(width: size, height: size)
+                    Rectangle()
+                        .frame(width: size, height: size/40)
+                        .offset(x: size/2, y: 0)
+                    Rectangle()
+                        .frame(width: size, height: size/40)
+                        .offset(x: size/2, y: 0)
+                        .rotationEffect(Angle(degrees: 3.6 * Double(spinner.visualPercentage1)), anchor: .center)
+                    Rectangle()
+                        .frame(width: size, height: size/40)
+                        .offset(x: size/2, y: 0)
+                        .rotationEffect(Angle(degrees: 3.6 * Double(spinner.visualPercentage1 + spinner.visualPercentage2)), anchor: .center)
                     ArrowView(size: size * 0.75, width: 5)
                         .offset(x: 0, y: -size * 0.375)
                         .rotationEffect(Angle(degrees: 360 * currentRotation))

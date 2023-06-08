@@ -18,7 +18,7 @@ struct NodeView: View {
 
     // How many nodes have been visited?
     @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS VistedNodeCount FROM Node WHERE Node.visits > 0")
+        try await db.query("SELECT COUNT(*) AS VisitedNodeCount FROM Node WHERE Node.visits > 0")
     }) var nodesVisitedStats
     
     @BlackbirdLiveQuery(tableName: "Node", { db in
@@ -67,12 +67,6 @@ struct NodeView: View {
                     updateVisitCount(forNodeWithId: newNodeId)
                 }
             }
-
-            // Show a Text view, but render Markdown syntax, preserving newline characters
-            Text(try! AttributedString(markdown: node.narrative,
-                                       options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
-                                            .inlineOnlyPreservingWhitespace)))
-
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
