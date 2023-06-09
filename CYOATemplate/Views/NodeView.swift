@@ -15,25 +15,6 @@ struct NodeView: View {
     // The id of the node we are trying to view
     let currentNodeId: Int
     
-
-    // How many nodes have been visited?
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS VistedNodeCount FROM Node WHERE Node.visits > 0")
-    }) var nodesVisitedStats
-    
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
-    }) var totalNodesStats
-    
-    // The actual integer value for how many nodes have been visited
-    var visitedNodes: Int {
-        return nodesVisitedStats.results.first?["VisitedNodeCount"]?.intValue ?? 0
-    }
-    
-    var totalNodes: Int {
-        return totalNodesStats.results.first?["TotalNodeCount"]?.intValue ?? 0
-    }
-
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
@@ -46,41 +27,16 @@ struct NodeView: View {
     var body: some View {
         if let node = nodes.results.first {
             
-            VStack(spacing: 10) {
-                
-                Text("A total of \(visitedNodes) nodes out of \(totalNodes) nodes overall have beben visited in this story.")
-                
-                Divider()
-            
-                Text("Node visited \(node.visits) times")
-                
-                Divider()
-                
-                // Show a Text view, but render Markdown syntax, preserving newline characters
-                Text(try! AttributedString(markdown: node.narrative,
-                                           options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
-                                                .inlineOnlyPreservingWhitespace)))
-                .onAppear {
-                    updateVisitCount(forNodeWithId: currentNodeId)
-                }
-                .onChange(of: currentNodeId) { newNodeId in
-                    updateVisitCount(forNodeWithId: newNodeId)
-                }
-            }
-
             // Show a Text view, but render Markdown syntax, preserving newline characters
             Text(try! AttributedString(markdown: node.narrative,
                                        options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
                                             .inlineOnlyPreservingWhitespace)))
-
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
     }
     
     // MARK: Initializer
-    
-    // Function that runs once when the structure is created
     init(currentNodeId: Int) {
         
         // Retrieve rows that describe nodes in the directed graph
@@ -96,17 +52,7 @@ struct NodeView: View {
         self.currentNodeId = currentNodeId
         
     }
-
-
-    // MARK: Function(s)
-    func updateVisitCount(forNodeWithId id: Int) {
-        // Update visits count for this node
-        Task {
-            try await db!.transaction { core in
-                try core.query("UPDATE Node SET visits = Node.visits + 1 WHERE node_id = ?", id)
-            }
-        }
-    }
+    
     
 }
 
