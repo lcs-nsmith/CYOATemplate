@@ -26,6 +26,14 @@ struct NodeView: View {
     @BlackbirdLiveQuery(tableName: "Node", { db in
         try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
     }) var totalNodesStats
+    
+    @BlackbirdLiveQuery(tableName: "Node", { db in
+        try await db.query("SELECT COUNT(*) AS EndingsVisitedCount FROM Node WHERE ending_type_id IS NOT NULL AND Node.visits > 0 ")
+    }) var endingsVisitedStats
+    
+    @BlackbirdLiveQuery(tableName: "Node", { db in
+        try await db.query("SELECT COUNT(*) AS TotalEndingCount FROM Node WHERE ending_type_id IS NOT NULL")
+    }) var totalEndingsStats
   
     var visitedNodes: Int {
         return nodesVisitedStats.results.first?["VisitedNodeCount"]?.intValue ?? 0
@@ -33,6 +41,14 @@ struct NodeView: View {
     
     var totalNodes: Int {
         return totalNodesStats.results.first?["TotalNodeCount"]?.intValue ?? 0
+    }
+    
+    var visitedEndings: Int {
+        return endingsVisitedStats.results.first?["EndingsVisitedCount"]?.intValue ?? 0
+    }
+    
+    var totalEndings: Int {
+        return totalEndingsStats.results.first?["TotalEndingCount"]?.intValue ?? 0
     }
     
     let retroGameFontActive: Bool
@@ -54,6 +70,10 @@ struct NodeView: View {
             VStack(spacing: 10) {
                 
                 Text("A total of \(visitedNodes) nodes out of \(totalNodes) nodes overall have beben visited in this story.")
+                
+                Divider()
+                
+                Text("A total of \(visitedEndings) endings out of \(totalEndings) endings overall have beben visited in this story.")
                 
                 Divider()
             
