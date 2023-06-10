@@ -19,7 +19,7 @@ struct CYOATemplateApp: App {
     
     var body: some Scene {
         WindowGroup {
-            GameView(retroGameFontActive: $retroGameFont)
+            TitlePageView(retroGameFontActive: $retroGameFont)
             // Make the database available to all other view through the environment
                 .environment(\.blackbirdDatabase, AppDatabase.instance)
             
