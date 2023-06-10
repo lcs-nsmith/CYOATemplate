@@ -9,6 +9,7 @@ import SwiftUI
 import Blackbird
 
 struct SpinnerView: View {
+
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
     // The list of edges retrieved
@@ -16,11 +17,13 @@ struct SpinnerView: View {
     @BlackbirdLiveModels var edges: Blackbird.LiveResults<Edge>
     var size = 100.0
     @Binding var currentNodeId: Int
+
     @State var opacity = 0.0
     @State var outcome = 0
     @State var totalRotation = 0.0
     @State var currentRotation = 0.0
     var body: some View {
+
         if let spinner = spinners.results.first {
             VStack(spacing: size) {
                 ZStack {
@@ -72,6 +75,7 @@ struct SpinnerView: View {
                     currentNodeId = edges.results[outcome].to_node_id
                 })
                 .opacity(opacity)
+
             }
             .onAppear {
                 currentRotation = 0
@@ -111,6 +115,8 @@ struct SpinnerView: View {
 
 struct SpinnerView_Previews: PreviewProvider {
     static var previews: some View {
+
         SpinnerView(currentNodeId: .constant(55))
+
     }
 }

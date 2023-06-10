@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0D07909A2A30E2B200D6F5B5 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0790992A30E2B200D6F5B5 /* Spinner.swift */; };
+		44B586E32A30D85000B8093A /* RetroText in Frameworks */ = {isa = PBXBuildFile; productRef = 44B586E22A30D85000B8093A /* RetroText */; };
 		0D3577382A2D1635002E49D9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577372A2D1635002E49D9 /* SpinnerView.swift */; };
 		0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577392A2D1D4F002E49D9 /* ArrowView.swift */; };
-		0D35773C2A2E6DB4002E49D9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35773B2A2E6DB4002E49D9 /* Color.swift */; };
 		81C198A92A251ABB0047A4B3 /* CYOATemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */; };
 		81C198AD2A251ABC0047A4B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AC2A251ABC0047A4B3 /* Assets.xcassets */; };
 		81C198B02A251ABC0047A4B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AF2A251ABC0047A4B3 /* Preview Assets.xcassets */; };
@@ -29,7 +29,6 @@
 		0D0790992A30E2B200D6F5B5 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0D3577372A2D1635002E49D9 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		0D3577392A2D1D4F002E49D9 /* ArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
-		0D35773B2A2E6DB4002E49D9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		81C198A52A251ABB0047A4B3 /* CYOATemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYOATemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOATemplateApp.swift; sourceTree = "<group>"; };
 		81C198AC2A251ABC0047A4B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44B586E32A30D85000B8093A /* RetroText in Frameworks */,
 				81C784A62A28AADA001BC867 /* Blackbird in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +144,7 @@
 			name = CYOATemplate;
 			packageProductDependencies = (
 				81C784A52A28AADA001BC867 /* Blackbird */,
+				44B586E22A30D85000B8093A /* RetroText */,
 			);
 			productName = CYOATemplate;
 			productReference = 81C198A52A251ABB0047A4B3 /* CYOATemplate.app */;
@@ -175,6 +176,7 @@
 			mainGroup = 81C1989C2A251ABB0047A4B3;
 			packageReferences = (
 				81C784A42A28AADA001BC867 /* XCRemoteSwiftPackageReference "Blackbird" */,
+				44B586E12A30D85000B8093A /* XCRemoteSwiftPackageReference "RetroText" */,
 			);
 			productRefGroup = 81C198A62A251ABB0047A4B3 /* Products */;
 			projectDirPath = "";
@@ -205,7 +207,6 @@
 			files = (
 				81C198BB2A251B1B0047A4B3 /* Node.swift in Sources */,
 				0D3577382A2D1635002E49D9 /* SpinnerView.swift in Sources */,
-				0D35773C2A2E6DB4002E49D9 /* Color.swift in Sources */,
 				0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */,
 				81C198B92A251AE00047A4B3 /* GameView.swift in Sources */,
 				81C784A92A28AB38001BC867 /* AppDatabase.swift in Sources */,
@@ -419,6 +420,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		44B586E12A30D85000B8093A /* XCRemoteSwiftPackageReference "RetroText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/russellgordon/RetroText";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.16;
+			};
+		};
 		81C784A42A28AADA001BC867 /* XCRemoteSwiftPackageReference "Blackbird" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marcoarment/Blackbird";
@@ -430,6 +439,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		44B586E22A30D85000B8093A /* RetroText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44B586E12A30D85000B8093A /* XCRemoteSwiftPackageReference "RetroText" */;
+			productName = RetroText;
+		};
 		81C784A52A28AADA001BC867 /* Blackbird */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81C784A42A28AADA001BC867 /* XCRemoteSwiftPackageReference "Blackbird" */;

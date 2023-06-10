@@ -7,6 +7,7 @@
 
 import Blackbird
 import SwiftUI
+import RetroText
 
 struct NodeView: View {
     
@@ -16,6 +17,7 @@ struct NodeView: View {
     let currentNodeId: Int
     
 
+
     // How many nodes have been visited?
     @BlackbirdLiveQuery(tableName: "Node", { db in
         try await db.query("SELECT COUNT(*) AS VisitedNodeCount FROM Node WHERE Node.visits > 0")
@@ -24,16 +26,10 @@ struct NodeView: View {
     @BlackbirdLiveQuery(tableName: "Node", { db in
         try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
     }) var totalNodesStats
-    
-    // The actual integer value for how many nodes have been visited
-    var visitedNodes: Int {
-        return nodesVisitedStats.results.first?["VisitedNodeCount"]?.intValue ?? 0
-    }
-    
-    var totalNodes: Int {
-        return totalNodesStats.results.first?["TotalNodeCount"]?.intValue ?? 0
-    }
+  
+    let retroGameFontActive: Bool
 
+    
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
     
@@ -46,6 +42,7 @@ struct NodeView: View {
     var body: some View {
         if let node = nodes.results.first {
             
+
             VStack(spacing: 10) {
                 
                 Text("A total of \(visitedNodes) nodes out of \(totalNodes) nodes overall have beben visited in this story.")
@@ -55,27 +52,33 @@ struct NodeView: View {
                 Text("Node visited \(node.visits) times")
                 
                 Divider()
-                
-                // Show a Text view, but render Markdown syntax, preserving newline characters
-                Text(try! AttributedString(markdown: node.narrative,
-                                           options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
-                                                .inlineOnlyPreservingWhitespace)))
-                .onAppear {
+
+            // Show a Text view, but render Markdown syntax, preserving newline characters
+            if retroGameFontActive == true {
+              
+                TypedText(node.narrative, speed: .reallyFast)
+                    .foregroundColor(Color(.systemBrown))
+       
+            } else {
+                Text(nodeText(for: node))
+                    .font(.system(size: 16, weight: .medium, design: .monospaced))
+                    .foregroundColor(Color(.systemRed))
+            }
+           }
+           .onAppear {
                     updateVisitCount(forNodeWithId: currentNodeId)
                 }
                 .onChange(of: currentNodeId) { newNodeId in
                     updateVisitCount(forNodeWithId: newNodeId)
                 }
-            }
+
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
     }
     
     // MARK: Initializer
-    
-    // Function that runs once when the structure is created
-    init(currentNodeId: Int) {
+    init(currentNodeId: Int, retroGameFontActive: Bool) {
         
         // Retrieve rows that describe nodes in the directed graph
         // NOTE: There should only be one row for a given node_id
@@ -89,26 +92,23 @@ struct NodeView: View {
         // Set the node we are trying to view
         self.currentNodeId = currentNodeId
         
-    }
-
-
-    // MARK: Function(s)
-    func updateVisitCount(forNodeWithId id: Int) {
-        // Update visits count for this node
-        Task {
-            try await db!.transaction { core in
-                try core.query("UPDATE Node SET visits = Node.visits + 1 WHERE node_id = ?", id)
-            }
-        }
+        self.retroGameFontActive = retroGameFontActive
     }
     
+    // MARK: Function
+    func nodeText(for node: Node) -> AttributedString {
+        return try! AttributedString(markdown: node.narrative,
+                                   options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
+                                        .inlineOnlyPreservingWhitespace))
+
+    }
 }
 
 struct NodeView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        NodeView(currentNodeId: 1)
+        NodeView(currentNodeId: 1, retroGameFontActive: false)
         // Make the database available to all other view through the environment
             .environment(\.blackbirdDatabase, AppDatabase.instance)
         
