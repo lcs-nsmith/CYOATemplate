@@ -32,7 +32,9 @@ struct NodeView: View {
             
             // Show a Text view, but render Markdown syntax, preserving newline characters
             if retroGameFontActive == true {
-                TypedText("\(nodeText(for: node))", speed: .reallyFast)
+//                TypedText("\(nodeText(for: node))", speed: .reallyFast)
+//                    .foregroundColor(Color(.systemBrown))
+                TypedText(node.narrative, speed: .reallyFast)
                     .foregroundColor(Color(.systemBrown))
             } else {
                 Text(nodeText(for: node))

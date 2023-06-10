@@ -51,7 +51,7 @@ struct EdgesView: View {
                                 .onTapGesture {
                                     currentNodeId = currentEdge.to_node_id
                                 }
-                                .retroFont(.pixelEmulator, size: 20)
+                                .retroFont(.pixelEmulator, size: 14)
                                 .foregroundColor(.white)
                         } else {
                             Text(try! AttributedString(markdown: currentEdge.prompt))
@@ -59,6 +59,7 @@ struct EdgesView: View {
                                 .onTapGesture {
                                     currentNodeId = currentEdge.to_node_id
                                 }
+                                .font(.system(size: 16, weight: .medium, design: .monospaced))
                         }
                         
                         

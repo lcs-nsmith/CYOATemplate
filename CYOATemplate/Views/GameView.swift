@@ -30,86 +30,88 @@ struct GameView: View {
                     .ignoresSafeArea()
             }
             
-            VStack(spacing: 10) {
+            VStack {
                 
                 HStack {
                     
                     if retroGameFontActive == true {
                         Text("\(currentNodeId)")
                             .retroFont()
+                            .padding(.leading)
                     } else {
                         Text("\(currentNodeId)")
                             .font(.system(size: 35, weight: .medium, design: .monospaced))
+                            .padding(.leading)
                     }
                     
                     Spacer()
                     
                     Label(title: {
                         Text("")
-//                        Text("Settings")
+                        //                        Text("Settings")
                         
                     }, icon: {
                         Image(systemName: "gearshape.2")
                         
                     })
-                        .onTapGesture {
-                            showingPopover = true
-                        }
-                        .popover(isPresented: $showingPopover) {
-                            HStack {
+                    .padding(.trailing)
+                    .onTapGesture {
+                        showingPopover = true
+                    }
+                    .popover(isPresented: $showingPopover) {
+                        HStack {
                             
-                                VStack {
-                                    HStack {
-                                        Text("Retro Mode")
-                                            .padding()
-                                        Toggle("", isOn: $retroGameFontActive)
+                            VStack {
+                                HStack {
+                                    Text("Retro Mode")
                                         .padding()
-                                    }
-                                    Spacer()
+                                    Toggle("", isOn: $retroGameFontActive)
+                                        .padding()
                                 }
+                                Spacer()
+                            }
+                            
+                            Spacer()
+                            
+                            VStack {
+                                Button(action: {
+                                    showingPopover = false
+                                }, label: {
+                                    Label(title: {
+                                        Text("Back")
+                                    }, icon: {
+                                        Image(systemName: "arrowshape.turn.up.backward")
+                                    })
+                                    .foregroundColor(.blue)
+                                    .padding()
+                                })
                                 
                                 Spacer()
                                 
-                                VStack {
-                                    Button(action: {
-                                            showingPopover = false
-                                    }, label: {
-                                        Label(title: {
-                                            Text("Back")
-                                        }, icon: {
-                                            Image(systemName: "arrowshape.turn.up.backward")
-                                        })
-                                            .foregroundColor(.blue)
-                                            .padding()
-                                    })
-                                    
-                                    Spacer()
-                                    
-                                }
-                                
                             }
+                            
                         }
-                        .padding()
+                    }
+                    .padding()
                 }
                 
                 if retroGameFontActive == true {
-                    VStack {
                         NodeView(currentNodeId: currentNodeId, retroGameFontActive: retroGameFontActive)
-                            .retroFont(.pixelEmulator, size: 16)
-                    }
+                            .retroFont(.pixelEmulator, size: 14)
+                            .padding(.horizontal)
                 } else {
                     NodeView(currentNodeId: currentNodeId, retroGameFontActive: retroGameFontActive)
+                        .padding(.horizontal)
                 }
-                    
                 
                 Divider()
                 
                 EdgesView(currentNodeId: $currentNodeId, retroGameFontActive: retroGameFontActive)
+                    .padding(.trailing)
                 
                 Spacer()
                 
             }
-            .padding()
         }
     }
 }
