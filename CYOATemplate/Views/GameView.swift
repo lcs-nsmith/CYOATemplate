@@ -34,13 +34,24 @@ struct GameView: View {
             
             VStack {
                 HStack {
-                    Button("Back", action: {
+                    ZStack {
+                        Text("Back")
+                            .retroFont(.pixelEmulator, size: 14)
+                            .foregroundColor(.white)
+                            .opacity(retroGameFontActive ? 1 : 0)
+                        Text("Back")
+                            .font(.system(size: 16, weight: .medium, design: .monospaced))
+                            .foregroundColor(.white)
+                            .opacity(retroGameFontActive ? 0 : 1)
+                    }
+                    .opacity(previousNodes.count > 1 ? 1 : 0)
+                    .onTapGesture {
                         previousNodes.popLast()
                         currentNodeId = previousNodes.last!
-                    })
-                    .opacity(previousNodes.count > 1 ? 1 : 0)
+                    }
                     Spacer()
                 }
+                .padding()
                 HStack {
                     
                     if retroGameFontActive == true {

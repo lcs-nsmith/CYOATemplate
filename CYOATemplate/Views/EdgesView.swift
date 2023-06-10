@@ -71,10 +71,23 @@ struct EdgesView: View {
                 HStack {
                     Spacer()
                     
-                    Text("This marks the end of the story. Return to start.")
-                        .onTapGesture {
-                            currentNodeId = 1
-                        }
+                    if retroGameFontActive == true {
+                        Text("This marks the end of the story. Return to start.")
+                            .onTapGesture {
+                                currentNodeId = 1
+                            }
+                            .retroFont(.pixelEmulator, size: 14)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.trailing)
+                    }
+                    else {
+                        Text("This marks the end of the story. Return to start.")
+                            .onTapGesture {
+                                currentNodeId = 1
+                            }
+                            .multilineTextAlignment(.trailing)
+                            .font(.system(size: 16, weight: .medium, design: .monospaced))
+                    }
                 }
             }
             
