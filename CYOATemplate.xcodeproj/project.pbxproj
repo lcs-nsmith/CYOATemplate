@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0D07909A2A30E2B200D6F5B5 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0790992A30E2B200D6F5B5 /* Spinner.swift */; };
-		44B586E32A30D85000B8093A /* RetroText in Frameworks */ = {isa = PBXBuildFile; productRef = 44B586E22A30D85000B8093A /* RetroText */; };
 		0D3577382A2D1635002E49D9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577372A2D1635002E49D9 /* SpinnerView.swift */; };
 		0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3577392A2D1D4F002E49D9 /* ArrowView.swift */; };
+		447436E92A34042300EE97FB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447436E82A34042300EE97FB /* Color.swift */; };
+		44B586E32A30D85000B8093A /* RetroText in Frameworks */ = {isa = PBXBuildFile; productRef = 44B586E22A30D85000B8093A /* RetroText */; };
 		81C198A92A251ABB0047A4B3 /* CYOATemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */; };
 		81C198AD2A251ABC0047A4B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AC2A251ABC0047A4B3 /* Assets.xcassets */; };
 		81C198B02A251ABC0047A4B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C198AF2A251ABC0047A4B3 /* Preview Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		0D0790992A30E2B200D6F5B5 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0D3577372A2D1635002E49D9 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		0D3577392A2D1D4F002E49D9 /* ArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
+		447436E82A34042300EE97FB /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		81C198A52A251ABB0047A4B3 /* CYOATemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CYOATemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C198A82A251ABB0047A4B3 /* CYOATemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOATemplateApp.swift; sourceTree = "<group>"; };
 		81C198AC2A251ABC0047A4B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,8 +102,8 @@
 				81C198BA2A251B1B0047A4B3 /* Node.swift */,
 				81C198BC2A251B2B0047A4B3 /* Edge.swift */,
 				81C198BE2A251B4D0047A4B3 /* Ending.swift */,
-				0D35773B2A2E6DB4002E49D9 /* Color.swift */,
 				0D0790992A30E2B200D6F5B5 /* Spinner.swift */,
+				447436E82A34042300EE97FB /* Color.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -210,6 +212,7 @@
 				0D35773A2A2D1D4F002E49D9 /* ArrowView.swift in Sources */,
 				81C198B92A251AE00047A4B3 /* GameView.swift in Sources */,
 				81C784A92A28AB38001BC867 /* AppDatabase.swift in Sources */,
+				447436E92A34042300EE97FB /* Color.swift in Sources */,
 				81C198BD2A251B2B0047A4B3 /* Edge.swift in Sources */,
 				0D07909A2A30E2B200D6F5B5 /* Spinner.swift in Sources */,
 				81C198A92A251ABB0047A4B3 /* CYOATemplateApp.swift in Sources */,

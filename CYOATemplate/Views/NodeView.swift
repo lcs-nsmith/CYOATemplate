@@ -27,6 +27,14 @@ struct NodeView: View {
         try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
     }) var totalNodesStats
   
+    var visitedNodes: Int {
+        return nodesVisitedStats.results.first?["VisitedNodeCount"]?.intValue ?? 0
+    }
+    
+    var totalNodes: Int {
+        return totalNodesStats.results.first?["TotalNodeCount"]?.intValue ?? 0
+    }
+    
     let retroGameFontActive: Bool
 
     
@@ -101,6 +109,14 @@ struct NodeView: View {
                                    options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
                                         .inlineOnlyPreservingWhitespace))
 
+    }
+    
+    func updateVisitCount(forNodeWithId id: Int) {
+        Task {
+            try await db!.transaction { core in
+                try core.query("UPDATE Node SET visits = Node.visits + 1 WHERE node_id = ?", id)
+            }
+        }
     }
 }
 
