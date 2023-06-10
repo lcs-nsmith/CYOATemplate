@@ -18,6 +18,8 @@ struct GameView: View {
     
     @State private var showingPopover = false
     
+    @State var previousNodes: [Int] = [1]
+    
     // MARK: Computed properties
     var body: some View {
         
@@ -31,7 +33,14 @@ struct GameView: View {
             }
             
             VStack {
-                
+                HStack {
+                    Button("Back", action: {
+                        previousNodes.popLast()
+                        currentNodeId = previousNodes.last!
+                    })
+                    .opacity(previousNodes.count > 1 ? 1 : 0)
+                    Spacer()
+                }
                 HStack {
                     
                     if retroGameFontActive == true {
@@ -113,9 +122,24 @@ struct GameView: View {
                 
             }
             .opacity(currentNodeId < 55 || currentNodeId > 60 ? 1 : 0)
-          
-            SpinnerView(currentNodeId: $currentNodeId)
-                .opacity(currentNodeId < 55 || currentNodeId > 60 ? 0 : 1)
+            VStack {
+                HStack {
+                    Button("Back", action: {
+                        previousNodes.popLast()
+                        currentNodeId = previousNodes.last!
+                    })
+                    Spacer()
+                }
+                Spacer()
+                SpinnerView(currentNodeId: $currentNodeId)
+                Spacer()
+            }
+            .opacity(currentNodeId < 55 || currentNodeId > 60 ? 0 : 1)
+        }
+        .onChange(of: currentNodeId) { newNodeId in
+            if newNodeId != previousNodes.last {
+                previousNodes.append(newNodeId)
+            }
         }
     }
 }
