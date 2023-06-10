@@ -71,7 +71,7 @@ struct EdgesView: View {
                 HStack {
                     Spacer()
                     
-                    Text("No edges found for node with \(currentNodeId).")
+                    Text("This marks the end of the story. Return to start.")
                         .onTapGesture {
                             currentNodeId = 1
                         }
