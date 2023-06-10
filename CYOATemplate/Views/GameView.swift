@@ -112,6 +112,10 @@ struct GameView: View {
                 Spacer()
                 
             }
+            .opacity(currentNodeId < 55 || currentNodeId > 60 ? 1 : 0)
+          
+            SpinnerView(currentNodeId: $currentNodeId)
+                .opacity(currentNodeId < 55 || currentNodeId > 60 ? 0 : 1)
         }
     }
 }

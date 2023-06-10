@@ -16,7 +16,19 @@ struct NodeView: View {
     // The id of the node we are trying to view
     let currentNodeId: Int
     
+
+
+    // How many nodes have been visited?
+    @BlackbirdLiveQuery(tableName: "Node", { db in
+        try await db.query("SELECT COUNT(*) AS VisitedNodeCount FROM Node WHERE Node.visits > 0")
+    }) var nodesVisitedStats
+    
+    @BlackbirdLiveQuery(tableName: "Node", { db in
+        try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
+    }) var totalNodesStats
+  
     let retroGameFontActive: Bool
+
     
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
@@ -30,18 +42,36 @@ struct NodeView: View {
     var body: some View {
         if let node = nodes.results.first {
             
+
+            VStack(spacing: 10) {
+                
+                Text("A total of \(visitedNodes) nodes out of \(totalNodes) nodes overall have beben visited in this story.")
+                
+                Divider()
+            
+                Text("Node visited \(node.visits) times")
+                
+                Divider()
+
             // Show a Text view, but render Markdown syntax, preserving newline characters
             if retroGameFontActive == true {
-//                TypedText("\(nodeText(for: node))", speed: .reallyFast)
-//                    .foregroundColor(Color(.systemBrown))
+              
                 TypedText(node.narrative, speed: .reallyFast)
                     .foregroundColor(Color(.systemBrown))
+       
             } else {
                 Text(nodeText(for: node))
                     .font(.system(size: 16, weight: .medium, design: .monospaced))
                     .foregroundColor(Color(.systemRed))
             }
-            
+           }
+           .onAppear {
+                    updateVisitCount(forNodeWithId: currentNodeId)
+                }
+                .onChange(of: currentNodeId) { newNodeId in
+                    updateVisitCount(forNodeWithId: newNodeId)
+                }
+
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
