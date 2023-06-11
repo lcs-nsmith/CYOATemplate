@@ -16,43 +16,12 @@ struct NodeView: View {
     // The id of the node we are trying to view
     let currentNodeId: Int
     
-
-
+    
+    
     // How many nodes have been visited?
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS VisitedNodeCount FROM Node WHERE Node.visits > 0")
-    }) var nodesVisitedStats
-    
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS TotalNodeCount FROM Node")
-    }) var totalNodesStats
-    
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS EndingsVisitedCount FROM Node WHERE ending_type_id IS NOT NULL AND Node.visits > 0 ")
-    }) var endingsVisitedStats
-    
-    @BlackbirdLiveQuery(tableName: "Node", { db in
-        try await db.query("SELECT COUNT(*) AS TotalEndingCount FROM Node WHERE ending_type_id IS NOT NULL")
-    }) var totalEndingsStats
-  
-    var visitedNodes: Int {
-        return nodesVisitedStats.results.first?["VisitedNodeCount"]?.intValue ?? 0
-    }
-    
-    var totalNodes: Int {
-        return totalNodesStats.results.first?["TotalNodeCount"]?.intValue ?? 0
-    }
-    
-    var visitedEndings: Int {
-        return endingsVisitedStats.results.first?["EndingsVisitedCount"]?.intValue ?? 0
-    }
-    
-    var totalEndings: Int {
-        return totalEndingsStats.results.first?["TotalEndingCount"]?.intValue ?? 0
-    }
     
     let retroGameFontActive: Bool
-
+    
     
     // Needed to query database
     @Environment(\.blackbirdDatabase) var db: Blackbird.Database?
@@ -66,40 +35,33 @@ struct NodeView: View {
     var body: some View {
         if let node = nodes.results.first {
             
-
+            
             VStack(spacing: 10) {
                 
-                Text("A total of \(visitedNodes) nodes out of \(totalNodes) nodes overall have beben visited in this story.")
                 
-                Divider()
-                
-                Text("A total of \(visitedEndings) endings out of \(totalEndings) endings overall have beben visited in this story.")
-                
-                Divider()
-            
-                Text("Node visited \(node.visits) times")
-                
-                Divider()
-
-            // Show a Text view, but render Markdown syntax, preserving newline characters
-            if retroGameFontActive == true {
-              
-                TypedText(node.narrative, speed: .fast)
-                    .foregroundColor(Color(.systemBrown))
-       
-            } else {
-                Text(nodeText(for: node))
-                    .font(.system(size: 16, weight: .medium, design: .monospaced))
-                    .foregroundColor(Color(.systemRed))
+                // Show a Text view, but render Markdown syntax, preserving newline characters
+                if retroGameFontActive == true {
+                    Text("You have read page \(currentNodeId) a total of \(node.visits) times.")
+                        .retroFont(.pixelEmulator, size: 14)
+                        .font(.system(size: 16, weight: .medium, design: .monospaced))
+                    TypedText(node.narrative, speed: .fast)
+                        .foregroundColor(Color(.systemBrown))
+                    
+                } else {
+                    Text("You have read page \(currentNodeId) a total of \(node.visits) times.")
+                        .font(.system(size: 16, weight: .medium, design: .monospaced))
+                    Text(nodeText(for: node))
+                        .font(.system(size: 16, weight: .medium, design: .monospaced))
+                        .foregroundColor(Color(.systemRed))
+                }
             }
-           }
-           .onAppear {
-                    updateVisitCount(forNodeWithId: currentNodeId)
-                }
-                .onChange(of: currentNodeId) { newNodeId in
-                    updateVisitCount(forNodeWithId: newNodeId)
-                }
-
+            .onAppear {
+                updateVisitCount(forNodeWithId: currentNodeId)
+            }
+            .onChange(of: currentNodeId) { newNodeId in
+                updateVisitCount(forNodeWithId: newNodeId)
+            }
+            
         } else {
             Text("Node with id \(currentNodeId) not found; directed graph has a gap.")
         }
@@ -126,9 +88,9 @@ struct NodeView: View {
     // MARK: Function
     func nodeText(for node: Node) -> AttributedString {
         return try! AttributedString(markdown: node.narrative,
-                                   options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
-                                        .inlineOnlyPreservingWhitespace))
-
+                                     options: AttributedString.MarkdownParsingOptions(interpretedSyntax:
+                                            .inlineOnlyPreservingWhitespace))
+        
     }
     
     func updateVisitCount(forNodeWithId id: Int) {
