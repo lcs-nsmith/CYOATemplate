@@ -14,3 +14,4 @@ struct EndingType: BlackbirdModel {
     @BlackbirdColumn var color: String
 }
 
+let endingTypes = ["", "Outstanding", "Favorable", "Mediocre", "Bad", "Catastrophic"]
